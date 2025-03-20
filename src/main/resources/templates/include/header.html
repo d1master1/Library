@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/html">
+    <div class="container">
+        <a class="navbar-brand" href="/">Библиотека</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/addBook">Добавить книгу</a>
+                </li>
+                <li class="nav-item" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
+                    <a class="nav-link" href="/booksList">Список книг</a>
+                </li>
+                <li class="nav-item" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
+                    <a class="nav-link" href="/authorsList">Список авторов</a>
+                </li>
+                <li class="nav-item" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
+                    <a class="nav-link" href="/usersList">Список пользователей</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav me-3" sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" th:href="@{/profile}" role="button" th:text="${user.username}"></a>
+                </li>
+            </ul>
+
+            <form sec:authorize="isAuthenticated()" method="post" th:action="@{/logout}">
+                <button type="submit" class="btn btn-danger">Выйти</button>
+            </form>
+
+            <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                <li class="nav-item ms-2">
+                    <a href="/registration" class="btn btn-outline-primary">Зарегестрироваться</a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a href="/login" class="btn btn-primary">Войти</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:replace="~{include/header}"></div>
+
+<h2 class="text-center">Список книг в библиотеке</h2>
+<div class="container col-10">
+    <div th:if="${bookPage.totalPages > 0}" class="d-flex justify-content-center w-100">
+
+        <a th:if="${bookPage.number > 0}"
+           th:href="@{/booksList(size=${bookPage.size}, page=${bookPage.number})}"
+           class="btn btn-outline-primary mx-1">
+            &larr;
+        </a>
+
+        <div th:each="pageNumber : ${pageNumbers}" class="mx-1">
+            <a th:href="@{/booksList(size=${bookPage.size}, page=${pageNumber})}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber == bookPage.number + 1} ? 'active btn btn-primary' : 'btn btn-outline-primary'"
+               class="btn">
+            </a>
+        </div>
+
+        <a th:if="${bookPage.number + 1 < bookPage.totalPages}"
+           th:href="@{/booksList(size=${bookPage.size}, page=${bookPage.number + 2})}"
+           class="btn btn-outline-primary mx-1">
+            &rarr;
+        </a>
+
+    </div>
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Автор</th>
+            <th>Дата добавления</th>
+            <th>Пользователь</th>
+            <th>Изменение</th>
+            <th>Удаление</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book, iStat : ${bookPage.content}"
+            th:style="${iStat.odd}? 'font-weght: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+            <td th:text="${book.id}"></td>
+            <td>
+                <a th:href="@{/books/book/{id}(id=${book.id})}" th:text="${book.title}"></a>
+            </td>
+            <td th:text="${book.author.getName()}"></td>
+            <td th:text="${book.addedAt}"></td>
+            <td th:if="${book.user == null}">Пользователь удален</td>
+            <td th:if="${book.user != null}">
+                <a th:text="${book.user.getUsername()}" th:href="@{/users/user/{id}(id=${book.user.id})}"></a>
+            </td>
+            <td>
+                <a th:href="@{/books/book/{bookId}/editBook(bookId=${book.id})}" class="btn btn-primary">Изменить</a>
+            </td>
+            <td>
+                <form th:action="@{/books/book/{bookId}/deleteBook(bookId=${book.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Удалить книгу</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${bookPage.totalPages > 0}" class="d-flex justify-content-center w-100">
+
+        <a th:if="${bookPage.number > 0}"
+           th:href="@{/booksList(size=${bookPage.size}, page=${bookPage.number})}"
+           class="btn btn-outline-primary mx-1">
+            &larr;
+        </a>
+        
+        <div th:each="pageNumber : ${pageNumbers}" class="mx-1">
+            <a th:href="@{/booksList(size=${bookPage.size}, page=${pageNumber})}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber == bookPage.number + 1} ? 'active btn btn-primary' : 'btn btn-outline-primary'"
+               class="btn">
+            </a>
+        </div>
+
+        <a th:if="${bookPage.number + 1 < bookPage.totalPages}"
+           th:href="@{/booksList(size=${bookPage.size}, page=${bookPage.number + 2})}"
+           class="btn btn-outline-primary mx-1">
+            &rarr;
+        </a>
+        
+    </div>
+</div>
+
+</body>
+</html>
