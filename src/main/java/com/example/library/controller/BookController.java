@@ -26,7 +26,7 @@ public class BookController {
     }
     
     @ModelAttribute("book")
-    private Book book(@PathVariable long bookId) {
+    Book book(@PathVariable long bookId) {
         return this.bookService.findBookById(bookId);
     }
     

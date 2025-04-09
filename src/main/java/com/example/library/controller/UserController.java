@@ -1,12 +1,12 @@
 package com.example.library.controller;
 
-
 import com.example.library.model.Book;
 import com.example.library.model.User;
 import com.example.library.repo.BookRepo;
 import com.example.library.service.BookService;
 import com.example.library.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ public class UserController {
     }
     
     @GetMapping
-    public String getUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user, Model model, @PathVariable long userId) {
+    public String getUser(@AuthenticationPrincipal UserDetails user, Model model, @PathVariable long userId) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
         model.addAttribute("books", bookService.findByUser(userService.findById(userId)));
         model.addAttribute("account", userService.findById(userId));
@@ -62,7 +62,7 @@ public class UserController {
     }
     
     @GetMapping("/editUser")
-    public String editUser(@ModelAttribute("account") User account, @AuthenticationPrincipal org.springframework.security.core.userdetails.User user, Model model) {
+    public String editUser(@ModelAttribute("account") User account, @AuthenticationPrincipal UserDetails user, Model model) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
         model.addAttribute("account", userService.findById(account.getId()));
         

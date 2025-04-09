@@ -9,9 +9,9 @@ import java.util.List;
 public interface UserService {
     
     void save(UserDto userdto);
+
     User findUser(String username);
-    
-    
+
     List<User> findAllUsers();
 
     boolean isUsernameAvailable(String username);

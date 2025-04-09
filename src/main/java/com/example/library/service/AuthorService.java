@@ -20,4 +20,5 @@ public interface AuthorService {
     void editAuthor(Author author);
 
     boolean hasBooks(Long id);
+
 }

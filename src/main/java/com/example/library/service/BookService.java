@@ -24,6 +24,5 @@ public interface BookService {
     void editBook(Book book);
 
     Page<Book> findPaginated(Pageable pageable);
-    
-    
+
 }

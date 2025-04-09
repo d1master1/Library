@@ -35,6 +35,11 @@ public class User {
         this.surname = surname;
     }
 
+    public User(String name, Long id) {
+        this.name = name;
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,5 +82,8 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public void setId(long l) {
     }
 }
