@@ -23,7 +23,7 @@ public class AuthorsController {
     }
 
     @ModelAttribute("author")
-    private AuthorDto authorDto() {
+    AuthorDto authorDto() {
         return new AuthorDto();
     }
     

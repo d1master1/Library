@@ -2,8 +2,8 @@ package com.example.library.dto;
 
 public class AuthorDto {
 
-    private String name;
-    private String surname;
+    public String name;
+    public String surname;
 
     public String getName() {
         return name;
@@ -20,4 +20,5 @@ public class AuthorDto {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
 }
